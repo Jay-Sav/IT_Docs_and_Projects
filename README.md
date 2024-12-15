@@ -1,1 +1,1 @@
-# newproject2
+Repository for IT Projects and Certification Guides.
