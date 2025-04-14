@@ -1,4 +1,4 @@
-# TODO: Declare any necessary variables here. 
+# Variable Declaration. 
 file_name = input()
 output_file = 'report.csv'
 nested_list = []
@@ -10,7 +10,7 @@ number_of_scores = 0
 
       
       
-# TODO: Read a file name from the user and read the tsv file here. 
+#Read CSV File Here. 
 with open(file_name) as open_file:
     file_content = open_file.readlines()
     for line in file_content:
@@ -18,7 +18,7 @@ with open(file_name) as open_file:
         nested_list.append(line)
    
    
-# TODO: Compute student grades and exam averages, then output results to a text file here. 
+#Compute student grades and exam averages, then output results to CSV file here. 
 with open(output_file,'w') as file_output:
     file_output.write(f'First Name, Last Name, Mid Term Score 1, Mid Term Score 2, Mid Term Score 3, Grade Letter, Student Average\n')
     for student in nested_list:
