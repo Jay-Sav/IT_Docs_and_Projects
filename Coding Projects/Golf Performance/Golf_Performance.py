@@ -5,6 +5,7 @@ from Loading_Screen import progress_bar
 
 # Variables and list for get_player_names
 players = []
+players_dict = {}
 player_count = 1
 entry_count = 1
 
@@ -35,50 +36,58 @@ def get_player_names():
 
     
 def game_start(round):
-    if round == 3:
+   if round == 3:
         Course_num = 1
+        list_value = 0
         while Course_num < 4:
-            Course_par = input(f'What is Par for Course:{Course_num}:')
-            Current_Stroke = 1
+            Course_par = input(f'What is Par for Course {Course_num}: ')
             for player in players:
-                print(f'Course Par is: {Course_par}\n')
-                input(f'Player {player} is up! {player} Stroke:{Current_Stroke}\n')
-            Current_Stroke +=1
+                print("\n")
+                print(f'Total Strokes for {player[list_value]} on Course {Course_num}: ')
+                amount_of_strokes = int(input())
+                player.append(amount_of_strokes)
+            print('----------------')   
+            print(players)
+            input()
             Course_num +=1
+            clear_screen()
+            title_screen()
+   elif round == 6:
+        Course_num = 1
+        list_value = 0
+        while Course_num < 7:
+            Course_par = input(f'What is Par for Course {Course_num}: ')
+            for player in players:
+                print("\n")
+                print(f'Total Strokes for {player[list_value]} on Course {Course_num}: ')
+                amount_of_strokes = int(input())
+                player.append(amount_of_strokes)
+            print('----------------')   
+            print(players)
+            input()
+            Course_num +=1
+            clear_screen()
+            title_screen()
+   elif round == 9:
+        Course_num = 1
+        list_value = 0
+        while Course_num < 10:
+            Course_par = input(f'What is Par for Course {Course_num}: ')
+            for player in players:
+                print("\n")
+                print(f'Total Strokes for {player[list_value]} on Course {Course_num}: ')
+                amount_of_strokes = int(input())
+                player.append(amount_of_strokes)
+            print('----------------')   
+            print(players)
+            input()
+            Course_num +=1
+            clear_screen()
+            title_screen()
+
 
             
     
-
-
-
-
-def determine_golf_performance(par, strokes):
-    if par-3 == strokes:
-        return 'Albatross'
-    elif par-2 == strokes:
-        return 'Eagle'
-    elif par-1 == strokes:
-        return 'Birdie'
-    elif par == strokes:
-        return 'Par'
-    elif par+1 == strokes:
-        return 'Bogey'
-    elif par+2 == strokes:
-        return 'Double Bogey'
-    elif par+3 == strokes:
-        return 'Triple Bogey'
-    else:    
-        return '+' + str(strokes - par)
-    
-def iterate_through_holes():
-    hole = 1 
-    while hole <= 18:
-        par = int(input("What par was the hole?\n"))
-        strokes = int(input("How many strokes did you use:\n"))
-        result = determine_golf_performance(par, strokes)
-        print ("Hole", hole, "performance is", result)
-        hole +=1
-
 def main():
     title_screen()
     input(f'press any key to continue\n')
