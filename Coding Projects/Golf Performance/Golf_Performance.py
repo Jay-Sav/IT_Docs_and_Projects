@@ -2,6 +2,7 @@
 from Title_Screen import title_screen
 from Clear_Screen import clear_screen
 from Loading_Screen import progress_bar
+from Tally import tally_bar
 
 # Variables and list for get_player_names
 players = []
@@ -40,14 +41,18 @@ def game_start(round):
         Course_num = 1
         list_value = 0
         while Course_num < 4:
-            Course_par = input(f'What is Par for Course {Course_num}: ')
+            Course_par = int(input(f'What is Par for Course {Course_num}: '))
             for player in players:
                 print("\n")
-                print(f'Total Strokes for {player[list_value]} on Course {Course_num}: ')
-                amount_of_strokes = int(input())
+                print(f'Total Strokes for {player[list_value]} on Course {Course_num}: ',end='')
+                amount_of_strokes =int(input())
                 player.append(amount_of_strokes)
-            print('----------------')   
-            print(players)
+                print('Result:',end='')
+                determine_performance(Course_par,amount_of_strokes)
+                print("\n")
+            print('\n')
+            print('Updating Leaderboard') 
+            tally_bar()  
             input()
             Course_num +=1
             clear_screen()
@@ -56,12 +61,14 @@ def game_start(round):
         Course_num = 1
         list_value = 0
         while Course_num < 7:
-            Course_par = input(f'What is Par for Course {Course_num}: ')
+            Course_par = int(input(f'What is Par for Course {Course_num}: '))
             for player in players:
                 print("\n")
                 print(f'Total Strokes for {player[list_value]} on Course {Course_num}: ')
                 amount_of_strokes = int(input())
                 player.append(amount_of_strokes)
+                determine_performance(Course_par,amount_of_strokes)
+                print("\n")
             print('----------------')   
             print(players)
             input()
@@ -70,20 +77,49 @@ def game_start(round):
             title_screen()
    elif round == 9:
         Course_num = 1
-        list_value = 0
+        list_value = 0 #Access the first value in nested list players
         while Course_num < 10:
-            Course_par = input(f'What is Par for Course {Course_num}: ')
+            Course_par = int(input(f'What is Par for Course {Course_num}: '))
             for player in players:
                 print("\n")
                 print(f'Total Strokes for {player[list_value]} on Course {Course_num}: ')
                 amount_of_strokes = int(input())
                 player.append(amount_of_strokes)
+                determine_performance(Course_par,amount_of_strokes)
+                print("\n")
             print('----------------')   
             print(players)
             input()
             Course_num +=1
             clear_screen()
             title_screen()
+
+
+def determine_performance(par,strokes):
+    if strokes == 1:
+        print('Ace')
+    elif par - strokes == 0:
+        print('Par')
+    elif par - strokes == 1:
+        print('Birdie')
+    elif par - strokes == 2:
+        print('Eagle')
+    elif par - strokes == 3:
+        print('Albatross')
+    elif par - strokes == 4:
+        print('Condor')
+    elif par - strokes == -1:
+        print('Bogey')
+    elif par - strokes == -2:
+        print('Double Bogey')
+    elif par - strokes == -3:
+        print('Triple Bogey')
+    elif par - strokes == -4:
+        print('Quadruple Bogey')
+    else:
+        print(f'+{strokes - par}')
+
+
 
 
             
