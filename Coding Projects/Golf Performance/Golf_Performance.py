@@ -46,13 +46,20 @@ def game_start(round):
                 print("\n")
                 print(f'Total Strokes for {player[list_value]} on Course {Course_num}: ',end='')
                 amount_of_strokes =int(input())
-                player.append(amount_of_strokes)
+                raw_score = amount_of_strokes - Course_par
+                player.append(raw_score)
                 print('Result:',end='')
                 determine_performance(Course_par,amount_of_strokes)
                 print("\n")
             print('\n')
             print('Updating Leaderboard') 
             tally_bar()  
+            clear_screen()
+            title_screen()
+            print('Current Leaderboard')
+            print('----------------------')
+            print('\n')
+            leader_board()
             input()
             Course_num +=1
             clear_screen()
@@ -66,11 +73,20 @@ def game_start(round):
                 print("\n")
                 print(f'Total Strokes for {player[list_value]} on Course {Course_num}: ')
                 amount_of_strokes = int(input())
-                player.append(amount_of_strokes)
+                raw_score = amount_of_strokes - Course_par
+                player.append(raw_score)
+                print('Result:',end='')
                 determine_performance(Course_par,amount_of_strokes)
                 print("\n")
-            print('----------------')   
-            print(players)
+            print('\n')
+            print('Updating Leaderboard')
+            tally_bar()  
+            clear_screen()
+            title_screen()
+            print('Current Leaderboard')
+            print('----------------------')
+            print('\n')
+            leader_board()
             input()
             Course_num +=1
             clear_screen()
@@ -84,11 +100,20 @@ def game_start(round):
                 print("\n")
                 print(f'Total Strokes for {player[list_value]} on Course {Course_num}: ')
                 amount_of_strokes = int(input())
-                player.append(amount_of_strokes)
+                raw_score = amount_of_strokes - Course_par
+                player.append(raw_score)
+                print('Result:',end='')
                 determine_performance(Course_par,amount_of_strokes)
                 print("\n")
-            print('----------------')   
-            print(players)
+            print('\n')
+            print('Updating Leaderboard')
+            tally_bar()
+            clear_screen()
+            title_screen()
+            print('Current Leaderboard')
+            print('----------------------')
+            print('\n')
+            leader_board()
             input()
             Course_num +=1
             clear_screen()
@@ -118,6 +143,24 @@ def determine_performance(par,strokes):
         print('Quadruple Bogey')
     else:
         print(f'+{strokes - par}')
+
+
+def leader_board():
+    total_score = 0
+    for player in players:
+        player_score = player[1:]
+        for score in player_score:
+            total_score += score 
+        if total_score == 0:
+            print(f'{player[0]}: {total_score}\n')
+        elif total_score > 0:
+            print(f'{player[0]}: +{total_score}\n')
+        elif total_score < 0:
+            print(f'{player[0]}: {total_score}\n')
+        
+        total_score = 0
+    
+
 
 
 
