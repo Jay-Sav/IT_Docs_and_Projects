@@ -1,10 +1,12 @@
+#Outputs CPU%, Ram%, and Disk Usage
+
 import psutil
 from psutil import cpu_percent
 import os
 import time
 
 
-print('Gathering Computer Performance')
+print('Gathering Computer Statistics')
 
 cpu = cpu_percent(interval=3)
 ram = psutil.virtual_memory().percent

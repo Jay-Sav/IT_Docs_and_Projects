@@ -1,5 +1,7 @@
-import csv
+#Returns all processes currently running
+#Outputs to file "running_process.csv"
 
+import csv
 import psutil
 
 export_file = 'running_processes.csv'
@@ -19,4 +21,4 @@ with open(export_file, 'w') as f:
     writer.writerow([f'Total Running Processes: {process_counter}',])
 
 
-print('Computer Processes have been ')
+print(f'Computer Processes have been sent to file {export_file} ')
