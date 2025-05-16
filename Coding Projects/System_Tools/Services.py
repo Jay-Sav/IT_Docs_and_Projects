@@ -4,6 +4,7 @@
 import csv
 import psutil
 
+
 export_file = 'running_processes.csv'
 process_counter = 0
 
