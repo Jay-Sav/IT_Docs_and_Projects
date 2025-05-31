@@ -19,6 +19,7 @@ def main_menu():
         print('6. Find network device(s) by Business Location')
         print('7. Exit program')
         user_choice = int(input('Enter your choice: '))
+        print('\n')
         if user_choice == 1:
             display_all()
         elif user_choice == 2:
