@@ -4,110 +4,104 @@ from loading_screen import progress_bar
 from title_screen import print_title
 from dash_line import print_dash_line
 
-#Gather User Weight
+class user_data:
+    def __init__(self, weight, training_option_selected, training_sub_option_selected, training_duration):
+        self.weight = weight
+        self.training_option_selected = training_option_selected
+        self.training_sub_option_selected = training_sub_option_selected
+        self.training_duration = training_duration
+
+    def print_user_data(self):
+        print("User Data\n"+ "-" * 30)
+        print(f"Weight: {self.weight} lbs")
+        print(f"Training Option Selected: {self.training_option_selected}")
+        print(f"Training Sub-Option Selected: {self.training_sub_option_selected}")
+        print(f"Training Duration: {self.training_duration} minutes")
+
 
 def get_user_weight():
-    try:
-        weight = float(input(r"Enter your weight in pounds(lbs): ").strip())
-        return weight
-    except ValueError:
-        print("Invalid input. Please enter a valid number.")
-        return get_user_weight()
+    while True:
+        try:
+            weight = float(input("\nPlease enter your weight in pounds (lbs): ").strip())
+            if weight <= 0 or weight > 1000:
+                print("Invalid input. Please enter a weight between 1 and 1000 lbs.")
+            else:
+                return weight
+        except ValueError:
+            print("Invalid input. Please enter a valid number.")
 
-
-#Present and return Training Options
+###Prints training_options then returns training options to variable options_data in main function
 def list_training_options():
     training_options= {
-        "1": "Resistance Training",
-        "2": "High-Intensity Interval Training (HIIT)",
-        "3": "Endurance Training",
-        "4": "Hybrid Training",
-        "5": "Active Recovery"
-}
+        1: "Resistance Training",
+        2: "High-Intensity Interval Training (HIIT)",
+        3: "Endurance Training",
+        4: "Hybrid Training",
+        5: "Active Recovery"
+    }
+    for counter,option in enumerate(training_options.values(), 1):
+            print(f"{counter}:{option}")
     return training_options
+
+### Take training option selected and validate it against the options_data dictionary. If invalid, prompt user to re-enter until valid.
+def validate_training_option_selection(training_option_selected, options_data):
+    while training_option_selected not in options_data:
+        print("\nINVALID INPUT. Please enter a valid number corresponding to the training option.\n")
+        training_option_selected = int(input("How did you you train today (Enter the corresponding number): \n").strip())
+    return training_option_selected
+
 
 #Present and return Sub-Options based on Training Option Selected
 def get_training_sub_option(training_option_selected):
-    print(f"\nWhat kind of {training_option_selected} did you do?")
-    if training_option_selected == "Resistance Training":
-        sub_options = {
-            "1": "Hypertrophy (Muscle Growth) (8-12 reps)",
-            "2": "Strength Training (1-6 reps)",
-            "3": "Power Training (1-5 reps with explosive movements)"
-        }
-        for counter, option in enumerate(sub_options.values(), 1):
-            print(f"{counter}: {option}")
-        sub_option_selected = input("\nSelect the type of resistance training you performed (Enter the corresponding number): ").strip()
-        while sub_option_selected not in sub_options:
-            print("Invalid input. Please enter a valid number corresponding to the resistance training type.")
-            sub_option_selected = input("Select the type of resistance training you performed (Enter the corresponding number): ").strip()
-        return sub_options[sub_option_selected]
-    
-    elif training_option_selected == "High-Intensity Interval Training (HIIT)":
-        sub_options = {
-            "1": "Short Intervals (20-30 seconds work, 10-15 seconds rest)",
-            "2": "Long Intervals (1-4 minutes work, equal rest)",
-            "3": "Tabata (20 seconds work, 10 seconds rest for 4 minutes)"
-        }
-        print("\nSelect the type of HIIT you performed:")
-        for counter, option in enumerate(sub_options.values(), 1):
-            print(f"{counter}: {option}")
-        sub_option_selected = input("\nSelect the type of HIIT you performed (Enter the corresponding number): ").strip()
-        while sub_option_selected not in sub_options:
-            print("Invalid input. Please enter a valid number corresponding to the HIIT type.")
-            sub_option_selected = input("\nSelect the type of HIIT you performed (Enter the corresponding number): ").strip()
-        return sub_options[sub_option_selected]
-    
-    elif training_option_selected == "Endurance Training":
-        sub_options = {
-            "1": "Long Slow Distance (LSD) (steady pace for 60+ minutes)",
-            "2": "Tempo Runs (comfortably hard pace for 20-40 minutes)",
-            "3": "Moderate Intensity Steady State (MISS) (jogging or cycling at a steady pace)"
-        }
-        print("\nSelect the type of Endurance Training you performed:")
-        for counter, option in enumerate(sub_options.values(), 1):
-            print(f"{counter}: {option}")
-        sub_option_selected = input("\nSelect the type of endurance training you performed (Enter the corresponding number): ").strip()
-        while sub_option_selected not in sub_options:
-            print("Invalid input. Please enter a valid number corresponding to the endurance training type.")
-            sub_option_selected = input("\nSelect the type of endurance training you performed (Enter the corresponding number): ").strip()
-        return sub_options[sub_option_selected]
-    
-    elif training_option_selected == "Hybrid Training":
-        sub_options = {
-            "1": "CrossFit (varied functional movements performed at high intensity)",
-            "2": "Circuit Training (series of exercises performed in sequence with minimal rest)",
-            "3": "Mixed Modal Training (combination of strength, endurance, and cardio exercises)"
-        }
-        print("\nSelect the type of Hybrid Training you performed:")
-        for counter, option in enumerate(sub_options.values(), 1):
-            print(f"{counter}: {option}")
-        sub_option_selected = input("\nSelect the type of hybrid training you performed (Enter the corresponding number): ").strip()
-        while sub_option_selected not in sub_options:
-            print("Invalid input. Please enter a valid number corresponding to the hybrid training type.")
-            sub_option_selected = input("\nSelect the type of hybrid training you performed (Enter the corresponding number): ").strip()
-        return sub_options[sub_option_selected]
-    
-    elif training_option_selected == "Active Recovery":
-        sub_options = {
-            "1": "Yoga (gentle stretching and breathing exercises)",
-            "2": "Light Walking (easy pace for 20-30 minutes)",
-            "3": "Foam Rolling (self-myofascial release to improve mobility)"
-        }
-        print("\nSelect the type of Active Recovery you performed:")
-        for counter, option in enumerate(sub_options.values(), 1):
-            print(f"{counter}: {option}")
-        sub_option_selected = input("\nSelect the type of active recovery you performed (Enter the corresponding number): ").strip()
-        while sub_option_selected not in sub_options:
-            print("Invalid input. Please enter a valid number corresponding to the active recovery type.")
-            sub_option_selected = input("Select the type of active recovery you performed (Enter the corresponding number): ").strip()
-        return sub_options[sub_option_selected]
 
-#Print Training Options
-def print_training_options(training_options):
-    for counter,option in enumerate(training_options.values(), 1):
-        print(f"{counter}:{option}")
+    main_option = training_option_selected
 
+    sub_options = {
+        1:{1: "Hypertrophy (Muscle Growth) (8-12 reps)",
+            2: "Strength Training (1-6 reps)",
+            3: "Power Training (1-5 reps with explosive movements)"
+           },
+
+        2:{1: "Short Intervals (20-30 seconds work, 10-15 seconds rest)",
+            2: "Long Intervals (1-4 minutes work, equal rest)",
+            3: "Tabata (20 seconds work, 10 seconds rest for 4 minutes)"
+           },
+
+        3:{1: "Long Slow Distance (LSD) (steady pace for 60+ minutes)",
+            2: "Tempo Runs (comfortably hard pace for 20-40 minutes)",
+            3: "Moderate Intensity Steady State (MISS) (jogging or cycling at a steady pace)"
+           },
+
+        4:{1: "CrossFit (varied functional movements performed at high intensity)",
+            2: "Circuit Training (series of exercises performed in sequence with minimal rest)",
+            3: "Mixed Modal Training (combination of strength, endurance, and cardio exercises)"
+           },
+           
+        5:{1: "Yoga (gentle stretching and breathing exercises)",
+            2: "Light Walking (easy pace for 20-30 minutes)",
+            3: "Foam Rolling (self-myofascial release to improve mobility)"
+        }
+    }
+
+    display_sub_options = sub_options[main_option]
+    for option_number, option_description in display_sub_options.items(): 
+        print(f"{option_number}. {option_description}")
+    return display_sub_options
+
+
+def validate_training_sub_option_selection(training_option_sub_option_selected, display_sub_option):
+    while True:
+        try:
+            training_option_sub_option_selected = int(training_option_sub_option_selected)
+            if training_option_sub_option_selected not in display_sub_option:
+                print(f"\nINVALID INPUT of {training_option_sub_option_selected}. Please enter a valid number corresponding to the training sub-option.\n")
+                training_option_sub_option_selected = int(input("Enter the corresponding number for your specific training type: ").strip())
+            else:
+                return training_option_sub_option_selected
+        except ValueError:
+            print(f"\nINVALID INPUT of {training_option_sub_option_selected}. Please enter a valid number corresponding to the training sub-option.\n")
+            training_option_sub_option_selected = int(input("Enter the corresponding number for your specific training type: ").strip())
+  
 #Get Training Duration
 def get_training_duration():
     try:
@@ -139,28 +133,38 @@ if __name__ == "__main__":
     print(f"Current date and time: {current_time}\n")
 
 #Screen 3 - Gather User Weight, Training Option, Sub-Option, and Duration
-    weight = get_user_weight()    
-    print(f"\nYour weight is: {weight} lbs\n")
-    print_dash_line()
-    options_data = list_training_options()
-    print_training_options(options_data)
-    training_option_selected = input("\nHow did you you train today (Enter the corresponding number): ").strip()
-    ###Validate user input for training option selection
-    while training_option_selected not in options_data:
-        print("Invalid input. Please enter a valid number corresponding to the training option.")
-        training_option_selected = input("How did you you train today (Enter the corresponding number): \n").strip()
-    ############################
-    chosen_sub_option = get_training_sub_option(options_data[training_option_selected])
-    print(f"\nYou selected: {options_data[training_option_selected]} - {chosen_sub_option}")
-    print_dash_line()
-    training_duration = get_training_duration()
-    print(f"\nYour training duration was: {training_duration} minutes")
+    while True:
+        weight = get_user_weight()    
+        print(f"\nYour weight is: {weight} lbs\n")
+        print_dash_line()
+        options_data = list_training_options()
+        training_option_selected = int(input("\nHow did you you train today (Enter the corresponding number): ").strip())
+        training_option_selected = validate_training_option_selection(training_option_selected, options_data)
+        print(f"\nWhat specific type of {options_data[training_option_selected]} did you do today?\n"+"--" * 30)
+        display_sub_option = get_training_sub_option(int(training_option_selected))
+        training_sub_option_selected = int(input("\nEnter the corresponding number for your specific training type: ").strip())
+        training_sub_option_selected = validate_training_sub_option_selection(training_sub_option_selected, display_sub_option)
+        print(f"\nYou selected: {options_data[training_option_selected]} - {display_sub_option[int(training_sub_option_selected)]}")
+        training_option_selected = options_data[training_option_selected]
+        training_sub_option_selected = display_sub_option[int(training_sub_option_selected)]
+        print_dash_line()
+        training_duration = get_training_duration()
+        print(f"\nYour training duration was: {training_duration} minutes\n")
+
+        user  = user_data(weight, training_option_selected, training_sub_option_selected, training_duration)
+        user.print_user_data()
+
+        print_dash_line()
+        confirm_data = input("\nIs the above information correct? (Y/N): ").strip().lower()
+        if confirm_data == 'y':
+            break
+        else:
+            print("\nLet's try again.\n")
+            progress_bar(1)
+            clear_screen()
+            print_title()
+       
+
     input("\nSession complete. Press [ENTER] to close this window...")
   
-
-
-
-
-#print(weight)
-#print(current_utc_time)
 
