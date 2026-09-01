@@ -3,6 +3,9 @@ from clear_screen import clear_screen
 from loading_screen import progress_bar
 from title_screen import print_title
 from dash_line import print_dash_line
+from pathlib import Path
+import csv
+
 
 class user_data:
     def __init__(self, weight, training_option_selected, training_sub_option_selected, training_duration):
@@ -111,6 +114,16 @@ def get_training_duration():
         print("Invalid input. Please enter a valid number.")
         return get_training_duration()
 
+# Write user data to CSV file
+def write_user_data_to_csv(user, username, current_time):
+    documents_dir = Path.home() / "Documents"/"Recovery_Suite_Data"
+    file_path = documents_dir / f"{username}_Training_Data.csv"
+    documents_dir.mkdir(parents=True, exist_ok=True)  # Ensure the Documents directory exists
+    with open(file_path, mode='a', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(["Weight", "Training Option Selected", "Training Sub-Option Selected", "Training Duration", "Time Recorded"])
+        writer.writerow([user.weight, user.training_option_selected, user.training_sub_option_selected, user.training_duration, current_time])
+
 
 
 
@@ -157,14 +170,16 @@ if __name__ == "__main__":
         print_dash_line()
         confirm_data = input("\nIs the above information correct? (Y/N): ").strip().lower()
         if confirm_data == 'y':
-            break
+           username = str(input("\nPlease enter your username: ").strip())
+           write_user_data_to_csv(user, username,current_time)
+           print(f"\nYour data has been saved to {username}_Training_Data.csv in your Documents folder.\n")
+           break
         else:
             print("\nLet's try again.\n")
             progress_bar(1)
             clear_screen()
             print_title()
-       
-
+            
     input("\nSession complete. Press [ENTER] to close this window...")
   
 
